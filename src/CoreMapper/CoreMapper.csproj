@@ -5,6 +5,14 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>usercode</Authors>
     <PackageProjectUrl>https://github.com/usercode/CoreMapper</PackageProjectUrl>
+    <Description>Simple object mapper</Description>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Version>1.0.1</Version>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ObjectChangeTracking.Abstractions" Version="1.0.0" />
+  </ItemGroup>
 
 </Project>

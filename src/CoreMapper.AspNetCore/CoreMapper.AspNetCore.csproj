@@ -2,15 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>usercode</Authors>
+    <PackageProjectUrl>https://github.com/usercode/CoreMapper</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CoreMapper" Version="1.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\CoreMapper.Entities\CoreMapper.Entities.csproj" />
-    <ProjectReference Include="..\CoreMapper\CoreMapper.csproj" />
   </ItemGroup>
 
 </Project>

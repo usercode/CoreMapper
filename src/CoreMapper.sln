@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreMapper", "CoreMapper\Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreMapper.AspNetCore", "CoreMapper.AspNetCore\CoreMapper.AspNetCore.csproj", "{1F266214-C2D7-415F-87B8-D61EBFFBC637}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreMapper.Entities", "CoreMapper.Entities\CoreMapper.Entities.csproj", "{63B00E23-A729-4BD9-8D6A-EF68D0940432}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreMapper.Tests", "CoreMapper.Tests\CoreMapper.Tests.csproj", "{78CAD0C8-98C6-437A-90E8-5AA782D522C8}"
 EndProject
 Global
@@ -25,10 +23,6 @@ Global
 		{1F266214-C2D7-415F-87B8-D61EBFFBC637}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F266214-C2D7-415F-87B8-D61EBFFBC637}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F266214-C2D7-415F-87B8-D61EBFFBC637}.Release|Any CPU.Build.0 = Release|Any CPU
-		{63B00E23-A729-4BD9-8D6A-EF68D0940432}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{63B00E23-A729-4BD9-8D6A-EF68D0940432}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{63B00E23-A729-4BD9-8D6A-EF68D0940432}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{63B00E23-A729-4BD9-8D6A-EF68D0940432}.Release|Any CPU.Build.0 = Release|Any CPU
 		{78CAD0C8-98C6-437A-90E8-5AA782D522C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{78CAD0C8-98C6-437A-90E8-5AA782D522C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78CAD0C8-98C6-437A-90E8-5AA782D522C8}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -19,8 +19,6 @@ namespace ObjectChangeTracking.CoreMapper.Strategies
 
         public IEntitySelector EntitySelector { get; }
         
-
-        
         public Expression Apply(MappingContext mappingContext)
         {
             if (mappingContext.SourceProperty.Name.Length <= "Added".Length)
