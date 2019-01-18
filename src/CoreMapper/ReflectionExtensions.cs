@@ -6,7 +6,7 @@ using System.Text;
 
 namespace CoreMapper
 {
-    public static class ReflectionExtensions
+    static class ReflectionExtensions
     {
         public static bool IsNullable(this Type type)
         {

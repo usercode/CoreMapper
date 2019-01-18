@@ -12,8 +12,5 @@ namespace CoreMapper
 
         Expression SetValueToProperty(Expression setValueExpression, Expression sourceProperty, PropertyInfo sourcePropertyInfo);
 
-        //Expression GetAddedItems(Expression items, Expression sourceProperty);
-
-        //Expression GetRemovedItems(Expression items, Expression sourceProperty);
     }
 }

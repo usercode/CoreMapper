@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 
-namespace ObjectChangeTracking.CoreMapper.Strategies
+namespace CoreMapper.Strategies
 {
     public class CollectionToRemovedStrategy : IMappingStrategy
     {

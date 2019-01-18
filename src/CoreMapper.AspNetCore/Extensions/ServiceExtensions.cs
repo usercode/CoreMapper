@@ -1,9 +1,7 @@
 ﻿using CoreMapper.Entities;
-using CoreMapper.Entities.Strategies;
 using CoreMapper.Strategies;
 using Microsoft.Extensions.DependencyInjection;
 using ObjectChangeTracking.CoreMapper;
-using ObjectChangeTracking.CoreMapper.Strategies;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,14 +20,14 @@ namespace CoreMapper.AspNetCore
 
                 IEntitySelector entitySelector = service.GetService<TEntitySelector>();
 
-                mapper.MappingStrategies.Add(new SameNameAndTypeStrategy());
-                mapper.MappingStrategies.Add(new EntityToIdStrategry());
-                mapper.MappingStrategies.Add(new IdToEntityStrategy(entitySelector));
-                mapper.MappingStrategies.Add(new AddedToCollectionStrategy(entitySelector));
-                mapper.MappingStrategies.Add(new RemovedToCollectionStrategy(entitySelector));
-                mapper.MappingStrategies.Add(new CollectionToAddedStrategy());
-                mapper.MappingStrategies.Add(new CollectionToRemovedStrategy());
-                mapper.Interceptors.Add(new ChangeTrackingInterceptor());
+                mapper.RegisterStrategy<SameNameAndTypeStrategy>();
+                mapper.RegisterStrategy<EntityToIdStrategry>();
+                mapper.RegisterStrategy(new IdToEntityStrategy(entitySelector));
+                mapper.RegisterStrategy(new AddedToCollectionStrategy(entitySelector));
+                mapper.RegisterStrategy(new RemovedToCollectionStrategy(entitySelector));
+                mapper.RegisterStrategy<CollectionToAddedStrategy>();
+                mapper.RegisterStrategy<CollectionToRemovedStrategy>();
+                mapper.RegisterInterceptor<ChangeTrackingInterceptor>();
 
                 return mapper;
             });

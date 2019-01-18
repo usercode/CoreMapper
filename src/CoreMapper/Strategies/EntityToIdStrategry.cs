@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 
-namespace CoreMapper.Entities.Strategies
+namespace CoreMapper.Strategies
 {
     public class EntityToIdStrategry : IMappingStrategy
     {

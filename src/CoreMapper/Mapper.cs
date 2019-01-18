@@ -43,24 +43,45 @@ namespace CoreMapper
         /// <summary>
         /// MappingStrategies
         /// </summary>
-        public IList<IMappingStrategy> MappingStrategies { get; }
-
-        //public void Map<TSource, TDestination>(TSource source, TDestination destination, IEntitySelector entitySelector = null)
-        //{
-        //    var action = GetMap(typeof(TSource), typeof(TDestination));
-
-        //    action.Action(source, destination, entitySelector);
-        //}
+        private IList<IMappingStrategy> MappingStrategies { get; }
 
         private IDictionary<TypeKey, Mapping> _maps;
-        
-        public void Map(Object source, Object destination)
+
+        public void RegisterStrategy<TStrategy>()
+             where TStrategy : class, IMappingStrategy, new()
+        {
+            RegisterStrategy(new TStrategy());
+        }
+
+        public void RegisterStrategy<TStrategy>(TStrategy mappingStrategy)
+            where TStrategy : class, IMappingStrategy
+        {
+            if(MappingStrategies.Contains(mappingStrategy) == false)
+            {
+                MappingStrategies.Add(mappingStrategy);
+            }
+        }
+
+        public void RegisterInterceptor<TInterceptor>()
+            where TInterceptor : class, IInterceptor, new()
+        {
+            RegisterInterceptor(new TInterceptor());
+        }
+
+        public void RegisterInterceptor<TInterceptor>(TInterceptor interceptor = null)
+            where TInterceptor : class, IInterceptor
+        {
+            if(Interceptors.Contains(interceptor) == false)
+            {
+                Interceptors.Add(interceptor);
+            }
+        }       
+
+        public void Map(object source, object destination)
         {
             var action = GetMap(source.GetType(), destination.GetType());
 
             action.Action(source, destination);
-            
-            //action(source, destination);
         }
 
         protected Mapping GetMap(Type source, Type destination)
@@ -85,7 +106,7 @@ namespace CoreMapper
             ParameterExpression sourceExpression = Expression.Parameter(typeof(object), "source");
             ParameterExpression destinationExpression = Expression.Parameter(typeof(object), "target");
             
-            Expression typeFactory = Expression.Property(Expression.Constant(this), nameof(TypeFactory));
+            //Expression typeFactory = Expression.Property(Expression.Constant(this), nameof(TypeFactory));
 
             UnaryExpression source_ = Expression.Convert(sourceExpression, sourceType);
             UnaryExpression target_ = Expression.Convert(destinationExpression, targetType);
@@ -134,5 +155,7 @@ namespace CoreMapper
 
             return new Mapping() { Action = compiled };
         }
+
+      
     }
 }

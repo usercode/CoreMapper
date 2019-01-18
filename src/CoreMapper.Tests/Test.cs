@@ -1,11 +1,9 @@
 ﻿using CoreMapper;
 using CoreMapper.Entities;
-using CoreMapper.Entities.Strategies;
 using CoreMapper.Strategies;
 using CoreMapper.Tests.Models;
 using ObjectChangeTracking;
 using ObjectChangeTracking.CoreMapper;
-using ObjectChangeTracking.CoreMapper.Strategies;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
@@ -19,12 +17,13 @@ namespace CoreMapper.Tests
         {
             IEntitySelector entitySelector = new EntitySelector();
 
-            Mapper mapper = new Mapper();
-            mapper.MappingStrategies.Add(new SameNameAndTypeStrategy());
-            mapper.MappingStrategies.Add(new EntityToIdStrategry());
-            mapper.MappingStrategies.Add(new IdToEntityStrategy(entitySelector));
-            mapper.MappingStrategies.Add(new CollectionToAddedStrategy());
-            mapper.Interceptors.Add(new ChangeTrackingInterceptor());
+            IMapper mapper = new Mapper();
+            mapper.RegisterStrategy<SameNameAndTypeStrategy>();
+            mapper.RegisterStrategy<EntityToIdStrategry>();
+            mapper.RegisterStrategy(new IdToEntityStrategy(entitySelector));
+            mapper.RegisterStrategy<CollectionToAddedStrategy>();
+            //mapper.MappingStrategies.Add(new CollectionToRemovedStrategy());
+            mapper.RegisterInterceptor<ChangeTrackingInterceptor>();
 
             return mapper;
         }
@@ -32,21 +31,13 @@ namespace CoreMapper.Tests
         [Fact]
         public void EqualProperties()
         {
-            try
-            {
-                ItemA itemA = new ItemA() { Value = "123", Counter = 12 };
-                ItemB itemB = new ItemB() { Value = "...", Counter = 0 };
+            ItemA itemA = new ItemA() { Value = "123", Counter = 12 };
+            ItemB itemB = new ItemB() { Value = "...", Counter = 0 };
 
-                CreateMapper().Map(itemA, itemB);
+            CreateMapper().Map(itemA, itemB);
 
-                Assert.Equal("123", itemB.Value);
-                Assert.Equal(12, itemB.Counter);
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
+            Assert.Equal("123", itemB.Value);
+            Assert.Equal(12, itemB.Counter);
         }
 
         [Fact]
@@ -96,7 +87,7 @@ namespace CoreMapper.Tests
         [Fact]
         public void ChangeTracking()
         {
-            ItemB objA = new ItemB() { Counter = 101 }.AsTrackable();
+            ItemB objA = new ItemB() { Counter = 123 }.AsTrackable();
             objA.IsActive = true;
 
             ItemA objB = new ItemA() { IsActive = null };
@@ -110,26 +101,18 @@ namespace CoreMapper.Tests
         [Fact]
         public void ChangeTrackingCollection()
         {
-            try
-            {
-                ItemB objA = new ItemB();
-                objA.Items.Add(new SubItem() { ItemB = new ItemB() { Id = 1 } });
-                
-                objA = objA.AsTrackable();
-                objA.Items.Add(new SubItem() { ItemB = new ItemB() { Id = 3 } });
+            ItemB objA = new ItemB();
+            objA.Items.Add(new SubItem() { ItemB = new ItemB() { Id = 1 } });
 
-                UpdateItem updateItem = new UpdateItem();
+            objA = objA.AsTrackable();
+            objA.Items.Add(new SubItem() { ItemB = new ItemB() { Id = 3 } });
 
-                CreateMapper().Map(objA, updateItem);
+            UpdateItem updateItem = new UpdateItem();
 
-                Assert.True(updateItem.ItemsAdded.Count == 1);  //changed
-                Assert.True(updateItem.ItemsAdded[0].ItemBId == 3);
-            }
-            catch (Exception ex)
-            {
+            CreateMapper().Map(objA, updateItem);
 
-                throw;
-            }
+            Assert.True(updateItem.ItemsAdded.Count == 1);  //changed
+            Assert.True(updateItem.ItemsAdded[0].ItemBId == 3);
         }
 
         [Fact]
@@ -142,7 +125,7 @@ namespace CoreMapper.Tests
 
             CreateMapper().Map(updateItem, itemA);
             
-            Assert.True(itemA.Category.Id == 123);
+            Assert.Equal(123, itemA.Category.Id);
         }
 
         [Fact]
@@ -155,30 +138,22 @@ namespace CoreMapper.Tests
 
             CreateMapper().Map(entity, updateItem);
 
-            Assert.True(updateItem.CategoryId == 123);
+            Assert.Equal(123, updateItem.CategoryId);
         }
 
         [Fact]
         public void Collection()
         {
-            try
-            {
-                ItemA objA = new ItemA() { IsActive = true };
-                objA.Items.Add(new SubItem() { SortKey = 2 });
+            ItemA objA = new ItemA() { IsActive = true };
+            objA.Items.Add(new SubItem() { SortKey = 2 });
 
-                ItemB objB = new ItemB();
+            ItemB objB = new ItemB();
 
-                CreateMapper().Map(objA, objB);
+            CreateMapper().Map(objA, objB);
 
-                Assert.True(objB.Items.Count == 1);
-                Assert.True(objB.Items[0].SortKey == 2);
-                Assert.True(ReferenceEquals(objA.Items[0], objB.Items[0]) == false);
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }            
+            Assert.Single(objB.Items);
+            Assert.Equal(2, objB.Items[0].SortKey);
+            Assert.True(ReferenceEquals(objA.Items[0], objB.Items[0]) == false);
         }
     }
 }

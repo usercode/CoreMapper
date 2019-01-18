@@ -1,4 +1,5 @@
 ﻿using CoreMapper;
+using CoreMapper.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 
-namespace CoreMapper.Entities.Strategies
+namespace CoreMapper.Strategies
 {
     public class IdToEntityStrategy : IMappingStrategy
     {
@@ -24,7 +25,7 @@ namespace CoreMapper.Entities.Strategies
                 return null;
             }
 
-            String targetName = mappingContext.SourceProperty.Name.Substring(0, mappingContext.SourceProperty.Name.Length - "Id".Length);
+            string targetName = mappingContext.SourceProperty.Name.Substring(0, mappingContext.SourceProperty.Name.Length - "Id".Length);
 
             PropertyInfo targetProperty = mappingContext.TargetType
                                                             .GetProperties()

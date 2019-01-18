@@ -8,7 +8,7 @@ namespace ObjectChangeTracking.CoreMapper
 {
     class Helper
     {
-        public static bool IsChangedProperty(ITrackableObject obj, String property)
+        public static bool IsChangedProperty(ITrackableObject obj, string property)
         {
             return obj.ChangedProperties.Any(x => x.Name == property);
         }

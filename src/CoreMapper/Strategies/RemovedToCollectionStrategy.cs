@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 
-namespace ObjectChangeTracking.CoreMapper.Strategies
+namespace CoreMapper.Strategies
 {
     public class RemovedToCollectionStrategy : IMappingStrategy
     {
@@ -27,7 +27,7 @@ namespace ObjectChangeTracking.CoreMapper.Strategies
                 return null;
             }
 
-            String targetName = mappingContext.SourceProperty.Name.Substring(0, mappingContext.SourceProperty.Name.Length - "Removed".Length);
+            string targetName = mappingContext.SourceProperty.Name.Substring(0, mappingContext.SourceProperty.Name.Length - "Removed".Length);
 
             PropertyInfo targetProperty = mappingContext.TargetType
                                                         .GetProperties()

@@ -1,6 +1,5 @@
 ﻿using CoreMapper;
 using CoreMapper.Entities;
-using ObjectChangeTracking.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 
-namespace ObjectChangeTracking.CoreMapper.Strategies
+namespace CoreMapper.Strategies
 {
     public class AddedToCollectionStrategy : IMappingStrategy
     {
@@ -26,7 +25,7 @@ namespace ObjectChangeTracking.CoreMapper.Strategies
                 return null;
             }
             
-            String targetName = mappingContext.SourceProperty.Name.Substring(0, mappingContext.SourceProperty.Name.Length - "Added".Length);
+            string targetName = mappingContext.SourceProperty.Name.Substring(0, mappingContext.SourceProperty.Name.Length - "Added".Length);
 
             PropertyInfo targetProperty = mappingContext.TargetType
                                                         .GetProperties()

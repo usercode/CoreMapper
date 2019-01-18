@@ -5,6 +5,9 @@ using System.Text;
 
 namespace CoreMapper
 {
+    /// <summary>
+    /// IMapper
+    /// </summary>
     public interface IMapper
     {
         /// <summary>
@@ -12,16 +15,28 @@ namespace CoreMapper
         /// </summary>
         /// <param name="source"></param>
         /// <param name="destination"></param>
-        void Map(Object source, Object destination);
+        void Map(object source, object destination);
 
         /// <summary>
-        /// Interceptors
+        /// RegisterStrategy
         /// </summary>
-        IList<IInterceptor> Interceptors { get; }
+        /// <typeparam name="TStrategy"></typeparam>
+        /// <param name="mappingStrategy"></param>
+        void RegisterStrategy<TStrategy>()
+           where TStrategy : class, IMappingStrategy, new();
+
+        void RegisterStrategy<TStrategy>(TStrategy mappingStrategy)
+           where TStrategy : class, IMappingStrategy;
 
         /// <summary>
-        /// MappingStrategies
+        /// RegisterInterceptor
         /// </summary>
-        IList<IMappingStrategy> MappingStrategies { get; }
+        /// <typeparam name="TInterceptor"></typeparam>
+        /// <param name="interceptor"></param>
+        void RegisterInterceptor<TInterceptor>()
+            where TInterceptor : class, IInterceptor, new();
+
+        void RegisterInterceptor<TInterceptor>(TInterceptor interceptor)
+            where TInterceptor : class, IInterceptor;
     }        
 }

@@ -5,10 +5,11 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>usercode</Authors>
     <PackageProjectUrl>https://github.com/usercode/CoreMapper</PackageProjectUrl>
+    <Version>1.0.2.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CoreMapper" Version="1.0.1" />
+    <PackageReference Include="CoreMapper" Version="1.0.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
   </ItemGroup>
 
