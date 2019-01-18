@@ -1,8 +1,8 @@
 # CoreMapper
-Simple object mapper focused for Data Transfer Objects (DTO) and Entity Framework Core usage.
+Simple object mapper focused for Data Transfer Objects (DTO) and Entity Framework Core usage.  
 
-https://www.nuget.org/packages/CoreMapper/
-https://www.nuget.org/packages/CoreMapper.AspNetCore/
+https://www.nuget.org/packages/CoreMapper  
+https://www.nuget.org/packages/CoreMapper.AspNetCore
 
 ## How to use it
 
