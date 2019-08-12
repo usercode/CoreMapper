@@ -1,5 +1,6 @@
 ﻿using CoreMapper;
 using CoreMapper.Defaults;
+using CoreMapper.Strategies;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -79,9 +80,39 @@ namespace CoreMapper
 
         public void Map(object source, object destination)
         {
-            var action = GetMap(source.GetType(), destination.GetType());
+            Mapping action = GetMap(source.GetType(), destination.GetType());
 
             action.Action(source, destination);
+        }
+        public TTargetType Map<TTargetType>(object source)
+            where TTargetType : class
+        {
+            Mapping mapping = GetMap(source.GetType(), typeof(TTargetType));
+
+            TTargetType target = (TTargetType)mapping.CreateTarget();
+
+            Map(source, target);
+
+            return target;
+        }
+
+        public IEnumerable<TTarget> Map<TTarget>(IEnumerable<object> sources)
+            where TTarget : class
+        {
+            List<TTarget> result = new List<TTarget>();
+
+            foreach(object source in sources)
+            {
+                Mapping mapping = GetMap(source.GetType(), typeof(TTarget));
+
+                TTarget target = (TTarget)mapping.CreateTarget();
+
+                Map(source, target);
+
+                result.Add(target);
+            }
+
+            return result;
         }
 
         protected Mapping GetMap(Type source, Type destination)
@@ -115,6 +146,10 @@ namespace CoreMapper
 
             foreach (PropertyInfo sourceProperty in sourceProperties)
             {
+                if(sourceProperty.Name == "Id")
+                {
+
+                }
                 Expression exprSourceProperty = Expression.Property(source_, sourceProperty);
                 
                 MappingContext context = new MappingContext(this, source_, sourceType, sourceProperty, exprSourceProperty, target_, targetType);
@@ -145,15 +180,21 @@ namespace CoreMapper
                 }
             }
 
+            //create mapping method
             Expression<Action<object, object>> lambda = Expression.Lambda<Action<object, object>>(
                                                      Expression.Block(block),
                                                      sourceExpression,
                                                      destinationExpression
                                                      );
-            
-            Action<object, object> compiled = lambda.Compile();
 
-            return new Mapping() { Action = compiled };
+            //create target
+            Expression<Func<object>> createTargetTypeExpr = Expression.Lambda<Func<object>>(Expression.New(targetType));
+
+            return new Mapping()
+            {
+                Action = lambda.Compile(),
+                CreateTarget = createTargetTypeExpr.Compile()
+            };
         }
 
       

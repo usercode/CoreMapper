@@ -22,7 +22,7 @@ namespace CoreMapper.Strategies
         
         public Expression Apply(MappingContext mappingContext)
         {
-            if (mappingContext.SourceProperty.Name.Length <= "Removed".Length)
+            if (mappingContext.SourceProperty.Name.EndsWith("Removed") == false)
             {
                 return null;
             }

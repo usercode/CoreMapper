@@ -7,6 +7,8 @@ namespace CoreMapper
 {
     public class Mapping
     {
-        public Action<Object, Object> Action;
+        public Action<object, object> Action;
+
+        public Func<object> CreateTarget;
     }
 }

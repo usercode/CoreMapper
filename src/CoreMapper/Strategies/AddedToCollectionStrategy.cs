@@ -20,7 +20,7 @@ namespace CoreMapper.Strategies
         
         public Expression Apply(MappingContext mappingContext)
         {
-            if (mappingContext.SourceProperty.Name.Length <= "Added".Length)
+            if (mappingContext.SourceProperty.Name.EndsWith("Added") == false)
             {
                 return null;
             }
